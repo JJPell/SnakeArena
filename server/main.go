@@ -13,9 +13,9 @@ var upgrader = websocket.Upgrader{
 }
 
 func main() {
-	networkManager := NewNetworkManager(upgrader)
-	webServer := NewWebServer(networkManager)
-	world := NewWorld(networkManager)
+	networkService := NewNetworkService(upgrader)
+	webServer := NewWebServer(networkService)
+	world := NewWorld(networkService)
 
 	go webServer.Start()
 

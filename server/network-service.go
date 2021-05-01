@@ -44,7 +44,7 @@ type User struct {
 	input      UserInput
 }
 
-type NetworkManager struct {
+type NetworkService struct {
 	upgrader            websocket.Upgrader
 	users               []*User
 	totalUsersConnected int
@@ -53,15 +53,15 @@ type NetworkManager struct {
 	test                string
 }
 
-func NewNetworkManager(upgrader websocket.Upgrader) *NetworkManager {
-	return &NetworkManager{
+func NewNetworkService(upgrader websocket.Upgrader) *NetworkService {
+	return &NetworkService{
 		upgrader:            upgrader,
 		totalUsersConnected: 0,
 		users:               make([]*User, 0),
 	}
 }
 
-func (this *NetworkManager) HandleRequest(res http.ResponseWriter, req *http.Request) {
+func (this *NetworkService) HandleRequest(res http.ResponseWriter, req *http.Request) {
 	// The following check origin code disables CORS
 	this.upgrader.CheckOrigin = func(r *http.Request) bool {
 		return true
@@ -93,7 +93,7 @@ func (this *NetworkManager) HandleRequest(res http.ResponseWriter, req *http.Req
 	this.ConnectionManager(user)
 }
 
-func (this *NetworkManager) InputByteToUserInput(number byte) UserInput {
+func (this *NetworkService) InputByteToUserInput(number byte) UserInput {
 	input := UserInput{
 		up:    false,
 		down:  false,
@@ -124,7 +124,7 @@ func (this *NetworkManager) InputByteToUserInput(number byte) UserInput {
 	return input
 }
 
-func (this *NetworkManager) ConnectionManager(user *User) {
+func (this *NetworkService) ConnectionManager(user *User) {
 	connection := user.connection
 
 	for {
@@ -140,7 +140,7 @@ func (this *NetworkManager) ConnectionManager(user *User) {
 	}
 }
 
-func (this *NetworkManager) GetUser(id int) *User {
+func (this *NetworkService) GetUser(id int) *User {
 	for i := 0; i < len(this.users); i++ {
 		user := this.users[i]
 		if user.id == id {
@@ -151,7 +151,7 @@ func (this *NetworkManager) GetUser(id int) *User {
 	return nil
 }
 
-func (this *NetworkManager) IsStateDifferent(state1 GameState, state2 GameState) bool {
+func (this *NetworkService) IsStateDifferent(state1 GameState, state2 GameState) bool {
 	state1Len := len(state1)
 	state2Len := len(state2)
 	if state1Len != state2Len {
@@ -178,7 +178,7 @@ func (this *NetworkManager) IsStateDifferent(state1 GameState, state2 GameState)
 	return false
 }
 
-func (this *NetworkManager) UpdateState(state GameState) {
+func (this *NetworkService) UpdateState(state GameState) {
 	this.gameStateBefore = this.gameStateNow
 	this.gameStateNow = state
 
@@ -189,7 +189,7 @@ func (this *NetworkManager) UpdateState(state GameState) {
 	}
 }
 
-func (this *NetworkManager) BroadcastState() {
+func (this *NetworkService) BroadcastState() {
 	for i := 0; i < len(this.users); i++ {
 		user := this.users[i]
 		user.connection.WriteJSON(this.gameStateNow)

@@ -6,12 +6,12 @@ import (
 )
 
 type WebServer struct {
-	networkManager *NetworkManager
+	networkService *NetworkService
 }
 
-func NewWebServer(networkManager *NetworkManager) *WebServer {
+func NewWebServer(networkService *NetworkService) *WebServer {
 	return &WebServer{
-		networkManager: networkManager,
+		networkService: networkService,
 	}
 }
 
@@ -27,5 +27,5 @@ func (this *WebServer) homePage(res http.ResponseWriter, req *http.Request) {
 }
 
 func (this *WebServer) wsEndPoint(res http.ResponseWriter, req *http.Request) {
-	this.networkManager.HandleRequest(res, req)
+	this.networkService.HandleRequest(res, req)
 }

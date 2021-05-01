@@ -2,20 +2,20 @@ package main
 
 type World struct {
 	players        map[int]*Player
-	networkManager *NetworkManager
+	networkService *NetworkService
 }
 
-func NewWorld(networkManager *NetworkManager) *World {
+func NewWorld(networkService *NetworkService) *World {
 	return &World{
 		players:        make(map[int]*Player),
-		networkManager: networkManager,
+		networkService: networkService,
 	}
 }
 
 func (this *World) Update(delta int64, time int64) {
-	userCount := len(this.networkManager.users)
+	userCount := len(this.networkService.users)
 	for i := 0; i < userCount; i++ {
-		user := this.networkManager.users[i]
+		user := this.networkService.users[i]
 
 		player, playerExists := this.players[user.id]
 
@@ -26,7 +26,7 @@ func (this *World) Update(delta int64, time int64) {
 					x: 0,
 					y: 0,
 				},
-				networkManager: this.networkManager,
+				networkService: this.networkService,
 				duration:       0,
 			}
 
@@ -36,7 +36,7 @@ func (this *World) Update(delta int64, time int64) {
 	}
 
 	state := this.CreateState()
-	this.networkManager.UpdateState(state)
+	this.networkService.UpdateState(state)
 }
 
 func (this *World) CreateState() GameState {

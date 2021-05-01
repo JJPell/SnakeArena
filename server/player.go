@@ -13,12 +13,12 @@ type Position struct {
 type Player struct {
 	userId         int
 	position       Position
-	networkManager *NetworkManager
+	networkService *NetworkService
 	duration       int64
 }
 
 func (this *Player) Update(delta int64, time int64) {
-	user := this.networkManager.GetUser(this.userId)
+	user := this.networkService.GetUser(this.userId)
 	input := user.input
 
 	if input.IsInputDirection() {
