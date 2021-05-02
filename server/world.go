@@ -45,9 +45,9 @@ func (this *World) CreateState() GameState {
 	for i := 0; i < len(this.players); i++ {
 		player := this.players[i]
 		entityState := EntityState{
-			id: player.userId,
-			x:  player.position.x,
-			y:  player.position.y,
+			Id: player.userId,
+			X:  player.position.x,
+			Y:  player.position.y,
 		}
 
 		state = append(state, entityState)

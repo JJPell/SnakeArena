@@ -15,9 +15,9 @@ type UserInput struct {
 }
 
 type EntityState struct {
-	id int
-	x  int
-	y  int
+	Id int
+	X  int
+	Y  int
 }
 
 type GameState = []EntityState
@@ -164,13 +164,13 @@ func (this *NetworkService) IsStateDifferent(state1 GameState, state2 GameState)
 
 		// TODO: Replace logic below with VisableFields function once @ golang 1.17
 		// https://stackoverflow.com/a/66511341/5181480
-		if entityState1.id != entityState2.id {
+		if entityState1.Id != entityState2.Id {
 			return true
 		}
-		if entityState1.x != entityState2.x {
+		if entityState1.X != entityState2.X {
 			return true
 		}
-		if entityState1.y != entityState1.y {
+		if entityState1.Y != entityState1.Y {
 			return true
 		}
 	}
@@ -182,7 +182,6 @@ func (this *NetworkService) UpdateState(state GameState) {
 	this.gameStateBefore = this.gameStateNow
 	this.gameStateNow = state
 
-	log.Print(state)
 	isStateDifferent := this.IsStateDifferent(this.gameStateNow, this.gameStateBefore)
 	if isStateDifferent {
 		this.BroadcastState()
