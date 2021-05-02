@@ -1,6 +1,11 @@
 import 'phaser';
-import { GameObjects } from 'phaser';
+import { Game, GameObjects } from 'phaser';
 import Binary from './Binary';
+
+enum ScreenSize {
+    Width = 800,
+    Height = 600,
+}
 
 interface IInput {
     up: boolean;
@@ -9,18 +14,28 @@ interface IInput {
     right: boolean;
 }
 
+interface EntityState {
+    id: number,
+    x: number,
+    y: number, 
+}
+
+type GameState = EntityState[];
+
 class NetworkService {
     private websocket: WebSocket;
     private lastInputNumber: number;
+    private gameState: GameState = [];
 
     constructor() {
         this.websocket = new WebSocket("ws://localhost:8080/ws");
         this.websocket.onmessage = (event) => {
-            console.log(event);
+            console.log(event.data);
+            this.mapState(JSON.parse(event.data));
         }
     }
 
-    updateInputs(inputs: IInput) {
+    updateInputs = (inputs: IInput) => {
         const inputsBinary = Object.keys(inputs).map((key) =>  inputs[key] ? 1 : 0)
         const inputsNumber = Binary.toNumber(inputsBinary);
 
@@ -31,11 +46,28 @@ class NetworkService {
         data[0] = inputsNumber;
         this.websocket.send(data);
     }
+
+    getState = (): GameState => this.gameState
+
+    private mapState = (state: any) => {
+        const newState: GameState = [];
+
+        for (let index = 0; index < state.length; index++) {
+            const entity = state[index];
+            newState.push({
+                id: entity.Id,
+                x: entity.X,
+                y: entity.Y,
+            });
+        }
+
+        this.gameState = newState;
+    }
 }
 
 export default class World extends Phaser.Scene
 {
-    public rectange: GameObjects.Rectangle;
+    public entities: GameObjects.Rectangle[] = [];
     private networkService: NetworkService;
     private inputState: IInput = {
         up: false,
@@ -58,8 +90,6 @@ export default class World extends Phaser.Scene
 
     create ()
     {
-        this.rectange = this.add.rectangle(128, 128, 16, 16, 0xffffff);
-
         this.input.keyboard.on('keydown', (event) => {
             switch (event.key) {
                 case "ArrowUp":
@@ -103,16 +133,35 @@ export default class World extends Phaser.Scene
         });
     }
 
-    update() {
+    createEntity(entityState: EntityState) {
+        const entity = this.add.rectangle(entityState.x, entityState.y, 16, 16, 0xffffff);
+        this.entities[entityState.id] = entity;
+    }
 
+    updateEntity(entityState: EntityState) {
+        const entity = this.entities[entityState.id];
+        entity.x = (ScreenSize.Width / 2) + (entityState.x * 16);
+        entity.y = (ScreenSize.Height / 2) - (entityState.y * 16);
+    }
+
+    update() {
+        const gameState = this.networkService.getState();
+
+        gameState.forEach((entityState) => {
+            if (this.entities[entityState.id]) {
+                this.updateEntity(entityState);
+            } else {
+                this.createEntity(entityState);
+            }
+        });
     }
 }
 
 const config = {
     type: Phaser.AUTO,
     backgroundColor: '#125555',
-    width: 800,
-    height: 600,
+    width: ScreenSize.Width,
+    height: ScreenSize.Height,
     scene: World
 };
 

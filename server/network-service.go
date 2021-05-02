@@ -107,13 +107,13 @@ func (this *NetworkService) InputByteToUserInput(number byte) UserInput {
 
 		switch index {
 		case 0:
-			input.up = inputBool
-		case 1:
-			input.down = inputBool
-		case 2:
-			input.left = inputBool
-		case 3:
 			input.right = inputBool
+		case 1:
+			input.left = inputBool
+		case 2:
+			input.down = inputBool
+		case 3:
+			input.up = inputBool
 		default:
 			break
 		}
@@ -182,10 +182,11 @@ func (this *NetworkService) UpdateState(state GameState) {
 	this.gameStateBefore = this.gameStateNow
 	this.gameStateNow = state
 
-	isStateDifferent := this.IsStateDifferent(this.gameStateNow, this.gameStateBefore)
-	if isStateDifferent {
-		this.BroadcastState()
-	}
+	this.BroadcastState()
+	// isStateDifferent := this.IsStateDifferent(this.gameStateNow, this.gameStateBefore)
+	// if isStateDifferent {
+	// 	this.BroadcastState()
+	// }
 }
 
 func (this *NetworkService) BroadcastState() {

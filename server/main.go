@@ -25,7 +25,7 @@ func main() {
 
 	// tickRate := 8
 	// tickRateDuration := time.Duration(time.Duration((1000 / tickRate)) * time.Millisecond)
-	tickRateDuration := 1 * time.Second
+	tickRateDuration := 100 * time.Millisecond
 
 	for tick := range time.Tick(tickRateDuration) {
 		timeNow := tick.Unix()
