@@ -7,43 +7,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type UserInput struct {
-	up    bool
-	down  bool
-	left  bool
-	right bool
-}
-
-type EntityState struct {
-	Id int
-	X  int
-	Y  int
-}
-
-type GameState = []EntityState
-
-func (this UserInput) IsInputDirection() bool {
-	if this.up {
-		return true
-	}
-	if this.down {
-		return true
-	}
-	if this.left {
-		return true
-	}
-	if this.right {
-		return true
-	}
-	return false
-}
-
-type User struct {
-	id         int
-	connection *websocket.Conn
-	input      UserInput
-}
-
 type NetworkService struct {
 	upgrader            websocket.Upgrader
 	users               []*User
