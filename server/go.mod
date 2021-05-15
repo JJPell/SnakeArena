@@ -1,4 +1,4 @@
-module github.com/JJPell/SnakeArena/server
+module github.com/JJPell/SnakeArena
 
 go 1.16
 
