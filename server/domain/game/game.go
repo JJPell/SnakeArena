@@ -1,15 +1,17 @@
 package game
 
 type Game struct {
-	entities    map[int]*Entity
-	players     map[int]*Player
+	id          int
+	entities    map[int]Entity
+	players     map[int]Player
 	entityCount int
 }
 
-func NewGame() *Game {
+func NewGame(id int) *Game {
 	return &Game{
-		entities: make(map[int]*Entity),
-		players:  make(map[int]*Player),
+		id:       id,
+		entities: make(map[int]Entity),
+		players:  make(map[int]Player),
 	}
 }
 
@@ -19,10 +21,11 @@ func (this *Game) Update(delta int64, time int64) {
 	}
 }
 
-func (this *Game) AddPlayer(x int, y int, length int) {
+func (this *Game) AddPlayer(connectionId int, x int, y int, length int) {
 	entityId := this.createEntityId()
 	player := &Player{
-		id: entityId,
+		id:           entityId,
+		connectionId: connectionId,
 		position: Position{
 			X: x,
 			Y: y,
@@ -37,6 +40,18 @@ func (this *Game) AddPlayer(x int, y int, length int) {
 	}
 	this.entities[entityId] = player
 	this.players[entityId] = player
+}
+
+func (this *Game) RemovePlayer(connectionId int) {
+
+}
+
+func (this *Game) UpdatePlayerInput(connectionId int, playerInput PlayerInput) {
+
+}
+
+func (this *Game) GetState() *GameState {
+
 }
 
 func (this *Game) createEntityId() int {

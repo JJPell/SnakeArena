@@ -1,10 +1,11 @@
 package game
 
 type Player struct {
-	id       int
-	position Position
-	length   int
-	input    PlayerInput
+	id           int
+	connectionId int
+	position     Position
+	length       int
+	input        PlayerInput
 }
 
 func (this *Player) GetState() *EntityState {
