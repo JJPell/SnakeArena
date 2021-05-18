@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/JJPell/SnakeArena/application"
+	u "github.com/JJPell/SnakeArena/domain/user"
+	"github.com/JJPell/SnakeArena/infrastructure"
 	"github.com/gorilla/websocket"
 )
 
@@ -12,25 +15,32 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-func main() {
-	networkService := NewNetworkService(upgrader)
-	webServer := NewWebServer(networkService)
-	world := NewWorld(networkService)
+func updatePlayers(gameService *application.GameService, userService *application.UserService) {
+	users := userService.GetUsers()
 
-	go webServer.Start()
+	for _, user := range users {
+		if user.State == u.UserStateNew {
+			this.Game
+		}
+	}
+}
+
+func main() {
+	webServer := infrastructure.NewWebServer(upgrader)
+	userRepository := infrastructure.NewUserRepository(webServer)
+	gameService := application.NewGameService()
+	userService := application.NewUserService(userRepository)
 
 	timeBefore := time.Now().Unix()
 
 	fmt.Println("Starting Game Loop")
 
-	// tickRate := 8
-	// tickRateDuration := time.Duration(time.Duration((1000 / tickRate)) * time.Millisecond)
 	tickRateDuration := 100 * time.Millisecond
 
 	for tick := range time.Tick(tickRateDuration) {
 		timeNow := tick.Unix()
 		delta := timeNow - timeBefore
-		world.Update(timeNow, delta)
+		game.Update(timeNow, delta)
 		timeBefore = timeNow
 	}
 }
