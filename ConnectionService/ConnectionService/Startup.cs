@@ -52,7 +52,7 @@ namespace ConnectionService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ChatHub>("/hub");
+                endpoints.MapHub<InputHub>("/hub");
             });
         }
     }

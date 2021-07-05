@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Zr/+a5hslDQD6OGaCWLKjOu7iLlhNYOm0zTRvx4UL1XRgk2e/nl6htC7UfffuHRBtgjpsfqs+h1GEeYYZ3KiNg==",
+  "dgSpecHash": "ySZh3sGblsTogx2E3xNZyr3AlyIJjGfr4GEUXDx3mnzBL5uz5h3j9W3eE7I03tE9+IEzfCEvt1rM5bN2IW7S+Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\james.pell\\snake-arena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
+  "projectFilePath": "C:\\Users\\pelly\\SnakeArena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

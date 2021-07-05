@@ -20,8 +20,11 @@ namespace GameService.Game
 
         public void UpdatePlayerInput(Guid id, Input input)
         {
-            var player = world.GetComponents(id);
-            player.
+            if (!world.EntityExists(id)) {
+                throw new Exception("Player Entity doesn't exist");
+            }
+
+            world.ReplaceComponent(id, input);
         }
         
         private IComponent[] CreatePlayerComponents(string name)
