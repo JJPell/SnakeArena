@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ECS;
 
-namespace GameService.Game.Component
+namespace GameService
 {
-    struct Name : IComponent
+    enum EntityType
     {
-        public string Value;
+        Player,
     }
 }

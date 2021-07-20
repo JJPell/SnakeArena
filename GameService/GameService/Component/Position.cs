@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SnakeArena.Game.Core;
 using ECS;
 
 
-namespace GameService.Game.Component
+namespace GameService.Component
 {
     struct Position : IComponent
     {

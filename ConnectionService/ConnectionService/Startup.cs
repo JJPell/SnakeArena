@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ConnectionService.Hubs;
+using GameService;
 
 namespace ConnectionService
 {
@@ -26,6 +27,7 @@ namespace ConnectionService
         {
             services.AddRazorPages();
             services.AddSignalR();
+            services.AddScoped<GameService.GameService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

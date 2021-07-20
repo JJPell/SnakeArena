@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ECS;
 
-namespace GameService.Game.Component
+namespace GameService.Component
 {
     struct Type : IComponent
     {

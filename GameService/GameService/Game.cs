@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ECS;
-using GameService.Game.Component;
+using GameService.Component;
 
-namespace GameService.Game
+namespace GameService
 {
-    class Game
+    public class Game
     {
         private World world;
+
+        public Guid Id = new Guid();
+
+        private const int playerLimit = 10;
 
         public Guid AddPlayer(string name)
         {
@@ -18,9 +22,14 @@ namespace GameService.Game
             return world.CreateEntity(components);
         }
 
+        public int PlayerCount()
+        {
+            world.
+        }
+
         public void UpdatePlayerInput(Guid id, Input input)
         {
-            if (!world.EntityExists(id)) {
+            if (!world.IsEntity(id)) {
                 throw new Exception("Player Entity doesn't exist");
             }
 

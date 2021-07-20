@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SnakeArena.Game.Core
+namespace GameService.System
 {
     class InputSystem : ECS.System
     {
