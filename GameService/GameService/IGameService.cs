@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GameService;
+using Games;
 
-namespace ConnectionService
+namespace Games
 {
     interface IGameService
     {

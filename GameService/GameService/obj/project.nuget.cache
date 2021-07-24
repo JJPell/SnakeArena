@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Kras1N3KuKgmmsThTNb380FgWZh2iOERpfQmoVVgDU1eqdyzgXE2wkYcWITdzDf0+FztDuHrtL2NpNkasmQ/xA==",
+  "dgSpecHash": "e2izXFaI36DS3X7LKE52fMRTvDPvVg1xcPAulLdR7wg9/3J/9PKYu0YDcepHLeHqnnublaV7qafaWDYgOl+eYQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj",
+  "projectFilePath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

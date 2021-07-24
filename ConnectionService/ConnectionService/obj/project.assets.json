@@ -12,17 +12,17 @@
           "bin/placeholder/ECS.dll": {}
         }
       },
-      "GameService/1.0.0": {
+      "Games/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "ECS": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/GameService.dll": {}
+          "bin/placeholder/Games.dll": {}
         },
         "runtime": {
-          "bin/placeholder/GameService.dll": {}
+          "bin/placeholder/Games.dll": {}
         }
       }
     }
@@ -33,15 +33,15 @@
       "path": "../../../ECS/ECS.csproj",
       "msbuildProject": "../../../ECS/ECS.csproj"
     },
-    "GameService/1.0.0": {
+    "Games/1.0.0": {
       "type": "project",
-      "path": "../../GameService/GameService/GameService.csproj",
-      "msbuildProject": "../../GameService/GameService/GameService.csproj"
+      "path": "../../GameService/GameService/Games.csproj",
+      "msbuildProject": "../../GameService/GameService/Games.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "GameService >= 1.0.0"
+      "Games >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -71,8 +71,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj": {
-              "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj"
+            "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj": {
+              "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj"
             }
           }
         }

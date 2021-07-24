@@ -82,8 +82,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj": {
-                "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj"
+              "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj": {
+                "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj"
               }
             }
           }
@@ -119,12 +119,12 @@
         }
       }
     },
-    "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj": {
+    "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj",
-        "projectName": "GameService",
-        "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj",
+        "projectUniqueName": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj",
+        "projectName": "Games",
+        "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj",
         "packagesPath": "C:\\Users\\james.pell\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\obj\\",
         "projectStyle": "PackageReference",

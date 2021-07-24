@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ECS;
+﻿using ECS;
 
 
-namespace GameService.Component
+namespace Games.Component
 {
     struct Position : IComponent
     {

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ConnectionService.Hubs;
-using GameService;
+using Games;
 
 namespace ConnectionService
 {
@@ -27,7 +27,7 @@ namespace ConnectionService
         {
             services.AddRazorPages();
             services.AddSignalR();
-            services.AddScoped<GameService.GameService>();
+            services.AddScoped<Games.GameService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +54,7 @@ namespace ConnectionService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<InputHub>("/hub");
+                endpoints.MapHub<GameHub>("/game-hub");
             });
         }
     }

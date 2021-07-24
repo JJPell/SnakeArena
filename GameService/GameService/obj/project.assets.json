@@ -32,9 +32,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj",
-      "projectName": "GameService",
-      "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\GameService.csproj",
+      "projectUniqueName": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj",
+      "projectName": "Games",
+      "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj",
       "packagesPath": "C:\\Users\\james.pell\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\obj\\",
       "projectStyle": "PackageReference",

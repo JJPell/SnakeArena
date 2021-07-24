@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECS", "..\ECS\ECS.csproj", "{898390EE-51CC-40B5-8432-25DB4F7CFE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECS", "..\ECS\ECS.csproj", "{898390EE-51CC-40B5-8432-25DB4F7CFE1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameService", "GameService\GameService\GameService.csproj", "{4AC089BC-C07E-413B-8BF5-75030F0B94E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Games", "GameService\GameService\Games.csproj", "{4AC089BC-C07E-413B-8BF5-75030F0B94E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionService", "ConnectionService\ConnectionService\ConnectionService.csproj", "{8185CAFF-A8E7-4552-A79E-736760088217}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectionService", "ConnectionService\ConnectionService\ConnectionService.csproj", "{8185CAFF-A8E7-4552-A79E-736760088217}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,46 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ECS;
-using GameService.Component;
+using Games.Component;
 
-namespace GameService
+namespace Games
 {
     public class Game
     {
-        private World world;
+        public readonly Guid Id = new Guid();
 
-        public Guid Id = new Guid();
+        private Dictionary<string, Guid> players = new Dictionary<string, Guid>();
+
+        private World world;
 
         private const int playerLimit = 10;
 
-        public Guid AddPlayer(string name)
+        private int lastUpdated = DateTime.Now.Millisecond;
+
+        public Guid AddPlayer(string playerId, string name)
         {
-            var components = this.CreatePlayerComponents(name);
+            var components = this.CreatePlayerComponents(playerId, name);
             return world.CreateEntity(components);
+        }
+
+        public bool HasPlayer(string playerId)
+        {
+            return players.ContainsKey(playerId);
+        }
+
+        public bool IsJoinable()
+        {
+            return this.PlayerCount() < playerLimit;
         }
 
         public int PlayerCount()
         {
-            world.
+            var entities = world.GetEntitiesWithComponent<Player>();
+            return entities.Count();
         }
 
-        public void UpdatePlayerInput(Guid id, Input input)
+        public void RemovePlayer(string playerId)
         {
-            if (!world.IsEntity(id)) {
+            var entityId = players[playerId];
+            world.RemoveEntity(entityId);
+            players.Remove(playerId);
+        }
+
+        public void Update()
+        {
+            var time = DateTime.Now.Millisecond;
+            var delta = time - lastUpdated;
+            world.Run(delta, time);
+            lastUpdated = time;
+        }
+
+        public void UpdatePlayerInput(string playerId, Input input)
+        {
+            Guid entityId;
+            bool exists = players.TryGetValue(playerId, out entityId);
+
+            if (!exists) {
+                throw new Exception("Player doesn't exist");
+            }
+
+            if (!world.IsEntity(entityId)) {
                 throw new Exception("Player Entity doesn't exist");
             }
 
-            world.ReplaceComponent(id, input);
+            world.ReplaceComponent(entityId, input);
         }
         
-        private IComponent[] CreatePlayerComponents(string name)
+        private IComponent[] CreatePlayerComponents(string playerId, string name)
         {
             var type = new Component.Type
             {
                 Value = EntityType.Player,
+            };
+
+            var player = new Player
+            {
+                Id = playerId
             };
 
             var nameComponent = new Name
@@ -51,7 +91,7 @@ namespace GameService
             var input = new Input();
             var position = new Position();
 
-            return new IComponent[] { type, nameComponent, input, position };
+            return new IComponent[] { type, player, nameComponent, input, position };
         }
     }
 }

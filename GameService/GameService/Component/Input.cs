@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ECS;
+﻿using ECS;
 
-namespace GameService.Component
+namespace Games.Component
 {
     public struct Input : IComponent
     {
-        bool Up;
-        bool Down;
-        bool Left;
-        bool Right;
+        public bool Up;
+        public bool Down;
+        public bool Left;
+        public bool Right;
     }
 }

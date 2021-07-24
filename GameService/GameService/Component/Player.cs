@@ -2,8 +2,8 @@
 
 namespace Games.Component
 {
-    struct Name : IComponent
+    struct Player : IComponent
     {
-        public string Value;
+        public string Id;
     }
 }
