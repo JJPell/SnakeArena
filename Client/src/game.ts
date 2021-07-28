@@ -1,6 +1,7 @@
 import 'phaser';
 import { Game, GameObjects } from 'phaser';
 import Binary from './Binary';
+import * as signalR from "@microsoft/signalr";
 
 enum ScreenSize {
     Width = 800,
@@ -23,45 +24,30 @@ interface EntityState {
 type GameState = EntityState[];
 
 class NetworkService {
-    private websocket: WebSocket;
+    private connection: signalR.HubConnection;
     private lastInputNumber: number;
     private gameState: GameState = [];
 
     constructor() {
-        this.websocket = new WebSocket("ws://localhost:8080/ws");
-        this.websocket.onmessage = (event) => {
-            console.log(event.data);
-            this.mapState(JSON.parse(event.data));
-        }
+        this.connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://localhost:44362/game-hub")
+        .build();
+
+        this.connection.on("state-update", (json: string) => {
+            console.log("State Update");
+            console.log(json);
+        });
+        
+        this.connection.start().catch(err => console.error(err)).finally(() => {
+            this.connection.send("JoinGame", "Pelly").finally(() => {
+                console.log("Sent JoinGame")
+                this.connection.send("SendStateUpdate");
+            });
+        });
     }
 
     updateInputs = (inputs: IInput) => {
-        const inputsBinary = Object.keys(inputs).map((key) =>  inputs[key] ? 1 : 0)
-        const inputsNumber = Binary.toNumber(inputsBinary);
 
-        if (inputsNumber === this.lastInputNumber) return;
-
-        this.lastInputNumber = inputsNumber;
-        const data = new Uint8Array(1);
-        data[0] = inputsNumber;
-        this.websocket.send(data);
-    }
-
-    getState = (): GameState => this.gameState
-
-    private mapState = (state: any) => {
-        const newState: GameState = [];
-
-        for (let index = 0; index < state.length; index++) {
-            const entity = state[index];
-            newState.push({
-                id: entity.Id,
-                x: entity.X,
-                y: entity.Y,
-            });
-        }
-
-        this.gameState = newState;
     }
 }
 
@@ -145,15 +131,15 @@ export default class World extends Phaser.Scene
     }
 
     update() {
-        const gameState = this.networkService.getState();
+        // const gameState = this.networkService.getState();
 
-        gameState.forEach((entityState) => {
-            if (this.entities[entityState.id]) {
-                this.updateEntity(entityState);
-            } else {
-                this.createEntity(entityState);
-            }
-        });
+        // gameState.forEach((entityState) => {
+        //     if (this.entities[entityState.id]) {
+        //         this.updateEntity(entityState);
+        //     } else {
+        //         this.createEntity(entityState);
+        //     }
+        // });
     }
 }
 

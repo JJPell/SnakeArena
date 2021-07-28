@@ -12,7 +12,7 @@ namespace Games
 
         private Dictionary<string, Guid> players = new Dictionary<string, Guid>();
 
-        private World world;
+        private readonly World world = new World();
 
         private const int playerLimit = 10;
 
@@ -22,6 +22,11 @@ namespace Games
         {
             var components = this.CreatePlayerComponents(playerId, name);
             return world.CreateEntity(components);
+        }
+
+        public EntityCollection GetState()
+        {
+            return world.Entities;
         }
 
         public bool HasPlayer(string playerId)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Games;
 using Games.Component;
+using Newtonsoft.Json;
 
 namespace ConnectionService.Hubs
 {
@@ -15,6 +16,7 @@ namespace ConnectionService.Hubs
         public GameHub(GameService gameService)
         {
             this.gameService = gameService;
+            System.Console.WriteLine("Game Hub Init");
         }
 
         public async Task Input(string message)
@@ -26,8 +28,21 @@ namespace ConnectionService.Hubs
 
         public async Task JoinGame(string playerName)
         {
+            Console.WriteLine("JoinGame: " + playerName);
             var connectionId = Context.ConnectionId;
-            gameService.JoinGame(connectionId, playerName);
+            var game = gameService.JoinGame(connectionId, playerName);
+            await Groups.AddToGroupAsync(connectionId, game.Id.ToString());
+        }
+
+        public async Task SendStateUpdate()
+        {
+            Console.WriteLine("SendStateUpdate");
+            foreach (var game in gameService.List())
+            {
+                var state = game.GetState();
+                string jsonString = JsonConvert.SerializeObject(state);
+                await Clients.Group(game.Id.ToString()).SendAsync("state-update", jsonString);
+            }
         }
 
         public async Task OnDisconnectedAsync()
@@ -37,8 +52,14 @@ namespace ConnectionService.Hubs
 
             if (game != null)
             {
+                await Groups.RemoveFromGroupAsync(connectionId, game.Id.ToString());
                 gameService.LeaveGame(connectionId);
             }
+        }
+
+        private void CompressGameState(Game game)
+        {
+            throw new NotImplementedException();
         }
 
         private Input InputMessageToInput(string message)

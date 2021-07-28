@@ -10,15 +10,6 @@ namespace Games
     {
         private Dictionary<Guid, Game> games = new Dictionary<Guid, Game>();
 
-        public GameService()
-        {
-            foreach (var keyValuePair in games)
-            {
-                var game = keyValuePair.Value;
-                game.Update();
-            }
-        }
-
         public void EndGame(Guid gameId)
         {
             games.Remove(gameId);

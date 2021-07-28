@@ -27,7 +27,10 @@ namespace ConnectionService
         {
             services.AddRazorPages();
             services.AddSignalR();
-            services.AddScoped<Games.GameService>();
+            //services.AddScoped<Games.GameService>();
+            var singleton = new GameService();
+            services.AddSingleton<GameService>(singleton);
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +54,13 @@ namespace ConnectionService
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // CORS
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
 
             app.UseEndpoints(endpoints =>
             {
