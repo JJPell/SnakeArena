@@ -10,7 +10,7 @@ namespace ConnectionService.Network.Game
     {
         public string Name { get; private set; }
 
-        public Player(int id, int x, int y, string name) : base(id, EntityType.Player, x, y)
+        public Player(string id, int x, int y, string name) : base(id, EntityType.Player, x, y)
         {
             Name = name;
         }

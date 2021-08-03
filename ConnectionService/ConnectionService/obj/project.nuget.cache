@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "OIHBRiLgzyDoPvYoSYpT3MRiDIOtqJvm9tvAV3vrqcxd807FrBa5ssnId+pb5AFYZ8HmoWEVPpHss70JUfJYiw==",
+  "dgSpecHash": "eyO5+T4y3s0lzjPkd6r65sOrO3X/A+2Fbk4xuB6M6Zrm7aBO24ig1+P/URrYJZC/a6LNuM5c/ady8JJYhIh2Pg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\james.pell\\snake-arena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
+  "projectFilePath": "C:\\Users\\pelly\\SnakeArena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\james.pell\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\pelly\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }

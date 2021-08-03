@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ECS;
 using Games;
 using Games.Component;
+using Newtonsoft.Json;
 
 namespace ConnectionService.Network.Game
 {
@@ -13,45 +14,30 @@ namespace ConnectionService.Network.Game
     {
         private List<Entity> entities = new List<Entity>();
 
+        private World world;
+
         public State(World world)
         {
+            this.world = world;
             var entities = world.Entities;
 
             foreach (var pair in entities)
             {
-                var components = pair.Value;
+                var entityId = pair.Key;
 
-                int id;
-                string name;
-                int x;
-                int y;
-
-                foreach (var component in components)
-                {
-                    switch (component.GetType().Name)
-                    {
-                        case nameof(Games.Component.Name):
-                            var nameComponent = (Games.Component.Name)component;
-                            name = nameComponent.Value;
-                            break;
-                        case nameof(Games.Component.Position):
-                            var positionComponent = (Games.Component.Position)component;
-                            x = positionComponent.X;
-                            y = positionComponent.Y;
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                var id = entityId.ToString();
+                var name = world.GetComponentByType<Player>(entityId).Item2.Name;
+                var x = world.GetComponentByType<Position>(entityId).Item2.X;
+                var y = world.GetComponentByType<Position>(entityId).Item2.Y;
 
                 var player = new Player(id, x, y, name);
-
+                this.entities.Add(player);
             }
         }
 
-        string ToJson()
+        public string ToJson()
         {
-
+            return JsonConvert.SerializeObject(entities);
         }
     }
 

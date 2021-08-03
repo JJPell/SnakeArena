@@ -1,21 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\james.pell\\snake-arena\\ConnectionService\\ConnectionService\\ConnectionService.csproj": {}
+    "C:\\Users\\pelly\\SnakeArena\\ConnectionService\\ConnectionService\\ConnectionService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\james.pell\\ECS\\ECS.csproj": {
+    "C:\\Users\\pelly\\ECS\\ECS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\james.pell\\ECS\\ECS.csproj",
+        "projectUniqueName": "C:\\Users\\pelly\\ECS\\ECS.csproj",
         "projectName": "ECS",
-        "projectPath": "C:\\Users\\james.pell\\ECS\\ECS.csproj",
-        "packagesPath": "C:\\Users\\james.pell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\james.pell\\ECS\\obj\\",
+        "projectPath": "C:\\Users\\pelly\\ECS\\ECS.csproj",
+        "packagesPath": "C:\\Users\\pelly\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pelly\\ECS\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\james.pell\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\pelly\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -54,22 +60,28 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\james.pell\\snake-arena\\ConnectionService\\ConnectionService\\ConnectionService.csproj": {
+    "C:\\Users\\pelly\\SnakeArena\\ConnectionService\\ConnectionService\\ConnectionService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\james.pell\\snake-arena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
+        "projectUniqueName": "C:\\Users\\pelly\\SnakeArena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
         "projectName": "ConnectionService",
-        "projectPath": "C:\\Users\\james.pell\\snake-arena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
-        "packagesPath": "C:\\Users\\james.pell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\james.pell\\snake-arena\\ConnectionService\\ConnectionService\\obj\\",
+        "projectPath": "C:\\Users\\pelly\\SnakeArena\\ConnectionService\\ConnectionService\\ConnectionService.csproj",
+        "packagesPath": "C:\\Users\\pelly\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pelly\\SnakeArena\\ConnectionService\\ConnectionService\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\james.pell\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\pelly\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -82,8 +94,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj": {
-                "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj"
+              "C:\\Users\\pelly\\SnakeArena\\GameService\\GameService\\Games.csproj": {
+                "projectPath": "C:\\Users\\pelly\\SnakeArena\\GameService\\GameService\\Games.csproj"
               }
             }
           }
@@ -121,22 +133,28 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj": {
+    "C:\\Users\\pelly\\SnakeArena\\GameService\\GameService\\Games.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj",
+        "projectUniqueName": "C:\\Users\\pelly\\SnakeArena\\GameService\\GameService\\Games.csproj",
         "projectName": "Games",
-        "projectPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\Games.csproj",
-        "packagesPath": "C:\\Users\\james.pell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\james.pell\\snake-arena\\GameService\\GameService\\obj\\",
+        "projectPath": "C:\\Users\\pelly\\SnakeArena\\GameService\\GameService\\Games.csproj",
+        "packagesPath": "C:\\Users\\pelly\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pelly\\SnakeArena\\GameService\\GameService\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\james.pell\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\pelly\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -149,8 +167,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\james.pell\\ECS\\ECS.csproj": {
-                "projectPath": "C:\\Users\\james.pell\\ECS\\ECS.csproj"
+              "C:\\Users\\pelly\\ECS\\ECS.csproj": {
+                "projectPath": "C:\\Users\\pelly\\ECS\\ECS.csproj"
               }
             }
           }
@@ -179,7 +197,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
