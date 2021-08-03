@@ -4,7 +4,7 @@ using ECS;
 namespace Games.Component
 {
     [Serializable]
-    struct Name : IComponent
+    public struct Name : IComponent
     {
         public string Value;
     }

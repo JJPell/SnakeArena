@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Games
 {
-    enum EntityType
+    public enum EntityType
     {
         Player,
     }

@@ -4,7 +4,7 @@ using ECS;
 namespace Games.Component
 {
     [Serializable]
-    struct Type : IComponent
+    public struct Type : IComponent
     {
         public EntityType Value;
     }

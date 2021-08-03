@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Games;
@@ -40,6 +39,7 @@ namespace ConnectionService.Hubs
             foreach (var game in gameService.List())
             {
                 var state = game.GetState();
+                var compressedState = CompressGameState(state);
                 string jsonString = JsonConvert.SerializeObject(state);
                 await Clients.Group(game.Id.ToString()).SendAsync("state-update", jsonString);
             }
