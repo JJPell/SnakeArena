@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ECS;
 using Games;
 using Games.Component;
@@ -9,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace ConnectionService.Network.Game
 {
-
     public class State
     {
         private List<Entity> entities = new List<Entity>();

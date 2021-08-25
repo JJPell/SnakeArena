@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 using Games;
 using Games.Component;
 using Newtonsoft.Json;
+using ConnectionService.Network.Game;
 
 namespace ConnectionService.Hubs
 {
@@ -38,9 +39,7 @@ namespace ConnectionService.Hubs
             Console.WriteLine("SendStateUpdate");
             foreach (var game in gameService.List())
             {
-                var state = game.GetState();
-                var compressedState = CompressGameState(state);
-                string jsonString = JsonConvert.SerializeObject(state);
+                string jsonString = game.GetState().ToString();
                 await Clients.Group(game.Id.ToString()).SendAsync("state-update", jsonString);
             }
         }

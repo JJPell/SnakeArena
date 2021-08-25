@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ECS;
 using Games.Component;
+using Games.Network.Game;
 
 namespace Games
 {
@@ -24,9 +25,10 @@ namespace Games
             return world.CreateEntity(components);
         }
 
-        public EntityCollection GetState()
+        public State GetState()
         {
-            return world.Entities;
+            var state = new State(this.world);
+            return state;
         }
 
         public bool HasPlayer(string playerId)
