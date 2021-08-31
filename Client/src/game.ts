@@ -8,6 +8,10 @@ enum ScreenSize {
     Height = 600,
 }
 
+enum EntityType {
+    Player,
+}
+
 interface IInput {
     up: boolean;
     down: boolean;
@@ -15,18 +19,23 @@ interface IInput {
     right: boolean;
 }
 
-interface EntityState {
+interface IEntityState {
     id: number,
+    type: EntityType,
     x: number,
     y: number, 
 }
 
-type GameState = EntityState[];
+interface IPlayerState extends IEntityState {
+    name: string,
+}
+
+type IGameState = IEntityState[];
 
 class NetworkService {
     private connection: signalR.HubConnection;
     private lastInputNumber: number;
-    private gameState: GameState = [];
+    private gameState: IGameState = [];
 
     constructor() {
         this.connection = new signalR.HubConnectionBuilder()
@@ -36,18 +45,32 @@ class NetworkService {
         this.connection.on("state-update", (json: string) => {
             console.log("State Update");
             console.log(json);
+            const state = JSON.parse(json);
+            this.gameState = state.map((rawEntity) => {
+                const player: IPlayerState = {
+                    id: rawEntity.Id,
+                    type: rawEntity.Type,
+                    x: rawEntity.X,
+                    y: rawEntity.Y,
+                    name: rawEntity.Name,
+                }
+
+                return player;
+            })
         });
         
         this.connection.start().catch(err => console.error(err)).finally(() => {
             this.connection.send("JoinGame", "Pelly").finally(() => {
-                console.log("Sent JoinGame")
-                this.connection.send("SendStateUpdate");
+                console.log("Sent JoinGame");
             });
         });
     }
 
-    updateInputs = (inputs: IInput) => {
+    getState = (): IGameState => this.gameState;
 
+    updateInputs = (inputs: IInput) => {
+        const inputNumber = Binary.toNumber([inputs.left, inputs.right, inputs.up, inputs.down]);
+        this.connection.send('Input', inputNumber);
     }
 }
 
@@ -66,8 +89,6 @@ export default class World extends Phaser.Scene
     {
         super('World');
         this.networkService = new NetworkService();
-
-
     }
 
     preload ()
@@ -119,27 +140,27 @@ export default class World extends Phaser.Scene
         });
     }
 
-    createEntity(entityState: EntityState) {
+    createEntity(entityState: IEntityState) {
         const entity = this.add.rectangle(entityState.x, entityState.y, 16, 16, 0xffffff);
         this.entities[entityState.id] = entity;
     }
 
-    updateEntity(entityState: EntityState) {
+    updateEntity(entityState: IEntityState) {
         const entity = this.entities[entityState.id];
         entity.x = (ScreenSize.Width / 2) + (entityState.x * 16);
         entity.y = (ScreenSize.Height / 2) - (entityState.y * 16);
     }
 
     update() {
-        // const gameState = this.networkService.getState();
+        const gameState = this.networkService.getState();
 
-        // gameState.forEach((entityState) => {
-        //     if (this.entities[entityState.id]) {
-        //         this.updateEntity(entityState);
-        //     } else {
-        //         this.createEntity(entityState);
-        //     }
-        // });
+        gameState.forEach((entityState) => {
+            if (this.entities[entityState.id]) {
+                this.updateEntity(entityState);
+            } else {
+                this.createEntity(entityState);
+            }
+        });
     }
 }
 

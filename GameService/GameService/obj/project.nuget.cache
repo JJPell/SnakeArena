@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "TdtPSJB/gzQfncH/gQLlkIBRP/N+QHAf7ENb21mctSVaJNM/1Qdg0W2PrHTwzJgWc3QcQJjKLnyYclm7rR+S8A==",
+  "dgSpecHash": "zmb0Kd4sp0N5HpS294mrYcjkk6Kj5bR8p8CuxTqeb74KaL8bt3t9D+RWV4SHN5qJ2TuYlPZWJ+sQbTIt4w0n8A==",
   "success": true,
   "projectFilePath": "C:\\Users\\pelly\\SnakeArena\\GameService\\GameService\\Games.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\pelly\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

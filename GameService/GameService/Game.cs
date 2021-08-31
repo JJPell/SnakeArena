@@ -4,6 +4,8 @@ using System.Linq;
 using ECS;
 using Games.Component;
 using Games.Network.Game;
+using Games.System;
+using Player = Games.Component.Player;
 
 namespace Games
 {
@@ -11,18 +13,27 @@ namespace Games
     {
         public readonly Guid Id = new Guid();
 
-        private Dictionary<string, Guid> players = new Dictionary<string, Guid>();
+        private int lastUpdated = DateTime.Now.Millisecond;
 
-        private readonly World world = new World();
+        private Dictionary<string, int> players = new Dictionary<string, int>();
 
         private const int playerLimit = 10;
 
-        private int lastUpdated = DateTime.Now.Millisecond;
+        private readonly World world = new World();
 
-        public Guid AddPlayer(string playerId, string name)
+        public Game()
+        {
+            var inputSystem = new InputSystem();
+            world.RegisterSystem(inputSystem);
+        }
+
+        public int AddPlayer(string playerId, string name)
         {
             var components = this.CreatePlayerComponents(playerId, name);
-            return world.CreateEntity(components);
+            var entityId = world.CreateEntity(components);
+            players.Add(playerId, entityId);
+            Console.WriteLine("New player joined game " + Id.ToString() + " with playerID " + playerId);
+            return entityId;
         }
 
         public State GetState()
@@ -64,20 +75,22 @@ namespace Games
 
         public void UpdatePlayerInput(string playerId, Input input)
         {
-            Guid entityId;
+            int entityId;
             bool exists = players.TryGetValue(playerId, out entityId);
 
-            if (!exists) {
+            if (!exists)
+            {
                 throw new Exception("Player doesn't exist");
             }
 
-            if (!world.IsEntity(entityId)) {
+            if (!world.IsEntity(entityId))
+            {
                 throw new Exception("Player Entity doesn't exist");
             }
 
             world.ReplaceComponent(entityId, input);
         }
-        
+
         private IComponent[] CreatePlayerComponents(string playerId, string name)
         {
             var type = new Component.Type

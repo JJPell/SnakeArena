@@ -6,7 +6,7 @@ namespace Games.Component
     [Serializable]
     public struct Position : IComponent
     {
-        public int X;
-        public int Y;
+        public double X;
+        public double Y;
     }
 }

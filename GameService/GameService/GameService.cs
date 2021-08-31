@@ -42,9 +42,18 @@ namespace Games
             if (game != null)
             {
                 game.UpdatePlayerInput(playerId, playerInput);
+                return;
             }
 
             throw new Exception("No game exists with that player");
+        }
+
+        public void UpdateAll()
+        {
+            foreach (var game in games)
+            {
+                game.Value.Update();
+            }
         }
 
         public Game FindGameByPlayer(string playerId)

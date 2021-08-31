@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Games;
 using Games.Component;
-using Newtonsoft.Json;
-using ConnectionService.Network.Game;
 
 namespace ConnectionService.Hubs
 {
@@ -13,13 +11,15 @@ namespace ConnectionService.Hubs
     {
         public GameService gameService;
 
-        public GameHub(GameService gameService)
+        public GameHub(GameService gameService, IHubContext<GameHub> hubContext)
         {
             this.gameService = gameService;
             System.Console.WriteLine("Game Hub Init");
+
+
         }
 
-        public async Task Input(string message)
+        public async Task Input(int message)
         {
             var connectionId = Context.ConnectionId;
             var input = InputMessageToInput(message);
@@ -32,16 +32,6 @@ namespace ConnectionService.Hubs
             var connectionId = Context.ConnectionId;
             var game = gameService.JoinGame(connectionId, playerName);
             await Groups.AddToGroupAsync(connectionId, game.Id.ToString());
-        }
-
-        public async Task SendStateUpdate()
-        {
-            Console.WriteLine("SendStateUpdate");
-            foreach (var game in gameService.List())
-            {
-                string jsonString = game.GetState().ToString();
-                await Clients.Group(game.Id.ToString()).SendAsync("state-update", jsonString);
-            }
         }
 
         public async Task OnDisconnectedAsync()
@@ -61,9 +51,24 @@ namespace ConnectionService.Hubs
             throw new NotImplementedException();
         }
 
-        private Input InputMessageToInput(string message)
+        private Input InputMessageToInput(int message)
         {
-            throw new NotImplementedException();
+            // Decimal to binary string conversion
+            string binary = Convert.ToString(message, 2);
+            // Pad binary with 0's if below 4 chars
+            binary = binary.PadLeft(4, '0');
+            bool left = binary[0] == '1';
+            bool right = binary[1] == '1';
+            bool up = binary[2] == '1';
+            bool down = binary[3] == '1';
+
+            return new Input
+            {
+                Left = left,
+                Right = right,
+                Up = up,
+                Down = down,
+            };
         }
     }
 }

@@ -27,10 +27,8 @@ namespace ConnectionService
         {
             services.AddRazorPages();
             services.AddSignalR();
-            //services.AddScoped<Games.GameService>();
-            var singleton = new GameService();
-            services.AddSingleton<GameService>(singleton);
             services.AddCors();
+            services.AddSingleton<Services.BroadcastService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +64,9 @@ namespace ConnectionService
             {
                 endpoints.MapHub<GameHub>("/game-hub");
             });
+
+            var broadcastService = (Services.BroadcastService)app.ApplicationServices.GetService(typeof(Services.BroadcastService));
+            broadcastService.SetUpdateRate(125);
         }
     }
 }
