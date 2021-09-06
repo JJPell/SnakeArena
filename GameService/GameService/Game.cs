@@ -67,7 +67,7 @@ namespace Games
 
         public void Update()
         {
-            var time = DateTime.Now.Millisecond;
+            var time = DateTime.UtcNow.Millisecond;
             var delta = time - lastUpdated;
             world.Run(delta, time);
             lastUpdated = time;

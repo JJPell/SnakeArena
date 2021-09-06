@@ -43,7 +43,7 @@ namespace Games.System
             Console.WriteLine(String.Join(", ", messages));
             Console.WriteLine(delta);
 
-            var normalSpeed = 0.6;
+            var normalSpeed = 1;
             var diagonalSpeed = normalSpeed / 2;
             var speed = inputCount == 1 ? normalSpeed : diagonalSpeed;
 

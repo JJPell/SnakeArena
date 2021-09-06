@@ -2,6 +2,7 @@ import 'phaser';
 import { Game, GameObjects } from 'phaser';
 import Binary from './Binary';
 import * as signalR from "@microsoft/signalr";
+import Caterpillar from './caterpillar';
 
 enum ScreenSize {
     Width = 800,
@@ -36,6 +37,8 @@ class NetworkService {
     private connection: signalR.HubConnection;
     private lastInputNumber: number;
     private gameState: IGameState = [];
+    private previousGameState: IGameState = [];
+    private removedEntities: number[] = []
 
     constructor() {
         this.connection = new signalR.HubConnectionBuilder()
@@ -43,8 +46,9 @@ class NetworkService {
         .build();
 
         this.connection.on("state-update", (json: string) => {
-            console.log("State Update");
-            console.log(json);
+            // console.log("State Update");
+            // console.log(json);
+            this.previousGameState = this.gameState;
             const state = JSON.parse(json);
             this.gameState = state.map((rawEntity) => {
                 const player: IPlayerState = {
@@ -56,7 +60,19 @@ class NetworkService {
                 }
 
                 return player;
-            })
+            });
+
+            this.previousGameState.forEach((previousEntity) => {
+                for (let index = 0; index < this.gameState.length; index++) {
+                    const entity = this.gameState[index];
+                    
+                    if (entity.id === previousEntity.id) {
+                        return;
+                    }
+                }
+
+                this.removedEntities.push(previousEntity.id);
+            });
         });
         
         this.connection.start().catch(err => console.error(err)).finally(() => {
@@ -68,6 +84,12 @@ class NetworkService {
 
     getState = (): IGameState => this.gameState;
 
+    getRemovedEntities = (): number[] => {
+        const removedEntities = JSON.parse(JSON.stringify(this.removedEntities));
+        this.removedEntities = [];
+        return removedEntities;
+    };
+
     updateInputs = (inputs: IInput) => {
         const inputNumber = Binary.toNumber([inputs.left, inputs.right, inputs.up, inputs.down]);
         this.connection.send('Input', inputNumber);
@@ -76,7 +98,7 @@ class NetworkService {
 
 export default class World extends Phaser.Scene
 {
-    public entities: GameObjects.Rectangle[] = [];
+    public entities: Record<number, Caterpillar> = {};
     private networkService: NetworkService;
     private inputState: IInput = {
         up: false,
@@ -141,14 +163,17 @@ export default class World extends Phaser.Scene
     }
 
     createEntity(entityState: IEntityState) {
-        const entity = this.add.rectangle(entityState.x, entityState.y, 16, 16, 0xffffff);
+        const x = (ScreenSize.Width / 2) + (entityState.x * 16);
+        const y = (ScreenSize.Height / 2) - (entityState.y * 16);
+        const entity = new Caterpillar(this, x, y);
         this.entities[entityState.id] = entity;
     }
 
     updateEntity(entityState: IEntityState) {
         const entity = this.entities[entityState.id];
-        entity.x = (ScreenSize.Width / 2) + (entityState.x * 16);
-        entity.y = (ScreenSize.Height / 2) - (entityState.y * 16);
+        const x = (ScreenSize.Width / 2) + (entityState.x * 16);
+        const y = (ScreenSize.Height / 2) - (entityState.y * 16);
+        entity.changePosition(x, y);
     }
 
     update() {
@@ -161,6 +186,14 @@ export default class World extends Phaser.Scene
                 this.createEntity(entityState);
             }
         });
+
+        const removedEntities = this.networkService.getRemovedEntities();
+        removedEntities.forEach((id) => {
+            this.entities[id].destroy();
+            delete this.entities[id];
+        })
+
+        Object.values(this.entities).forEach((entity) => entity.update());
     }
 }
 

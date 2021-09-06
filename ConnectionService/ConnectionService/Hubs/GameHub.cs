@@ -11,12 +11,9 @@ namespace ConnectionService.Hubs
     {
         public GameService gameService;
 
-        public GameHub(GameService gameService, IHubContext<GameHub> hubContext)
+        public GameHub(GameService gameService)
         {
             this.gameService = gameService;
-            System.Console.WriteLine("Game Hub Init");
-
-
         }
 
         public async Task Input(int message)
@@ -34,8 +31,10 @@ namespace ConnectionService.Hubs
             await Groups.AddToGroupAsync(connectionId, game.Id.ToString());
         }
 
-        public async Task OnDisconnectedAsync()
+        public override async Task OnDisconnectedAsync(Exception e)
         {
+            await base.OnDisconnectedAsync(e);
+            Console.WriteLine("Player Disconnected");
             var connectionId = Context.ConnectionId;
             var game = gameService.FindGameByPlayer(connectionId);
 

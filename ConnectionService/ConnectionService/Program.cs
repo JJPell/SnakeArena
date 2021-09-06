@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Timers;
 
 namespace ConnectionService
 {
@@ -23,30 +23,13 @@ namespace ConnectionService
 
         public static void StartGameService(GameService gameService)
         {
-            Thread thread = new Thread(() => UpdateGames(gameService));
-
-            thread.Start();
-        }
-
-        public static void UpdateGames(GameService gameService)
-        {
-            Console.WriteLine("Updating games");
-            int tickRate = 8;
-            int updateDuration = 1000 / tickRate;
-
-            while (true)
+            var interval = new Timer(125);
+            interval.AutoReset = true;
+            interval.Enabled = true;
+            interval.Elapsed += (Object source, ElapsedEventArgs e) =>
             {
-                var startTime = DateTime.Now.Millisecond;
                 gameService.UpdateAll();
-                var endTime = DateTime.Now.Millisecond;
-                var duration = endTime - startTime;
-                var sleepDuration = updateDuration - duration;
-
-                if (sleepDuration > 0)
-                {
-                    Thread.Sleep(sleepDuration);
-                }
-            }
+            };
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args, GameService gameService) =>

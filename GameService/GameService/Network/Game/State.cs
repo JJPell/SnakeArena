@@ -23,8 +23,8 @@ namespace Games.Network.Game
                 var entityId = pair.Key;
                 var name = world.GetComponentByType<Name>(entityId).Item2.Value;
                 var position = world.GetComponentByType<Position>(entityId).Item2;
-                var x = (int)position.X;
-                var y = (int)position.Y;
+                var x = (int)Math.Round(position.X);
+                var y = (int)Math.Round(position.Y);
 
                 var player = new Player(entityId, x, y, name);
                 this.entities.Add(player);
