@@ -9,5 +9,7 @@ namespace Games
     public enum EntityType
     {
         Player,
+        Food,
+        FoodGenerator,
     }
 }

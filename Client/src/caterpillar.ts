@@ -23,8 +23,8 @@ export default class Caterpillar extends Phaser.GameObjects.Container {
     for (let index = 0; index < this.size; index++) {
       const offset = index * this.squareSize;
       const square = scene.add.rectangle(
-        x + 1,
-        y - offset + 1,
+        x,
+        y - offset,
         this.squareSize - 2,
         this.squareSize - 2,
         this.colour

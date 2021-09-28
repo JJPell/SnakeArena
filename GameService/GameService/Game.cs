@@ -24,7 +24,9 @@ namespace Games
         public Game()
         {
             var inputSystem = new InputSystem();
+            var foodGeneratorSystem = new FoodGeneratorSystem();
             world.RegisterSystem(inputSystem);
+            world.RegisterSystem(foodGeneratorSystem);
         }
 
         public int AddPlayer(string playerId, string name)
@@ -110,8 +112,35 @@ namespace Games
 
             var input = new Input();
             var position = new Position();
+            var bodyComponents = CreatePlayerBody();
+            var components = new IComponent[] { type, player, nameComponent, input, position };
 
-            return new IComponent[] { type, player, nameComponent, input, position };
+            return components.Concat(bodyComponents).ToArray();
+        }
+
+        private IComponent[] CreatePlayerBody()
+        {
+            var bodyLength = new BodyLength
+            {
+                Value = 4,
+            };
+
+            var bodyComponents = new IComponent[bodyLength.Value + 1];
+            bodyComponents[0] = bodyLength;
+
+            for (int i = 0; i < bodyLength.Value; i++)
+            {
+                var bodyPart = new BodyPart
+                {
+                    Index = i,
+                    X = 0,
+                    Y = 0 - i,
+                };
+
+                bodyComponents[i + 1] = bodyPart;
+            }
+
+            return bodyComponents;
         }
     }
 }

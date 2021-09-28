@@ -3,6 +3,7 @@ import { Game, GameObjects } from 'phaser';
 import Binary from './Binary';
 import * as signalR from "@microsoft/signalr";
 import Caterpillar from './caterpillar';
+import Food from './food';
 
 enum ScreenSize {
     Width = 800,
@@ -11,6 +12,7 @@ enum ScreenSize {
 
 enum EntityType {
     Player,
+    Food,
 }
 
 interface IInput {
@@ -46,8 +48,8 @@ class NetworkService {
         .build();
 
         this.connection.on("state-update", (json: string) => {
-            // console.log("State Update");
-            // console.log(json);
+            console.log("State Update");
+            console.log(json);
             this.previousGameState = this.gameState;
             const state = JSON.parse(json);
             this.gameState = state.map((rawEntity) => {
@@ -98,7 +100,7 @@ class NetworkService {
 
 export default class World extends Phaser.Scene
 {
-    public entities: Record<number, Caterpillar> = {};
+    public entities: Record<number, Caterpillar | Food> = {};
     private networkService: NetworkService;
     private inputState: IInput = {
         up: false,
@@ -163,6 +165,26 @@ export default class World extends Phaser.Scene
     }
 
     createEntity(entityState: IEntityState) {
+        switch (entityState.type) {
+            case EntityType.Player:
+                this.createPlayer(entityState);
+                break;
+            case EntityType.Food:
+                this.createFood(entityState);
+                break;
+            default:
+                break;
+        }
+    }
+
+    createFood(entityState: IEntityState) {
+        const x = (ScreenSize.Width / 2) + (entityState.x * 16);
+        const y = (ScreenSize.Height / 2) - (entityState.y * 16);
+        const entity = new Food(this, x, y);
+        this.entities[entityState.id] = entity;
+    }
+
+    createPlayer(entityState: IEntityState) {
         const x = (ScreenSize.Width / 2) + (entityState.x * 16);
         const y = (ScreenSize.Height / 2) - (entityState.y * 16);
         const entity = new Caterpillar(this, x, y);
@@ -170,7 +192,17 @@ export default class World extends Phaser.Scene
     }
 
     updateEntity(entityState: IEntityState) {
-        const entity = this.entities[entityState.id];
+        switch (entityState.type) {
+            case EntityType.Player:
+                this.updatePlayer(entityState);
+                break;
+            default:
+                break;
+        }
+    }
+
+    updatePlayer(entityState: IEntityState) {
+        const entity = this.entities[entityState.id] as Caterpillar;
         const x = (ScreenSize.Width / 2) + (entityState.x * 16);
         const y = (ScreenSize.Height / 2) - (entityState.y * 16);
         entity.changePosition(x, y);

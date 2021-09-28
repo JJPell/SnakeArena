@@ -22,9 +22,10 @@ namespace Games.System
 
         public override void Run(KeyValuePair<int, IComponent[]> entity, int delta, int time, World world)
         {
-            var components = entity.Value;
-            var input = world.GetComponentByType<Component.Input>(components).Item2;
-            var position = world.GetComponentByType<Component.Position>(components).Item2;
+            var components = GetComponents(entity.Value);
+            var input = components.Item1;
+            var position = components.Item2;
+            var bodyParts = components.Item3;
 
             var inputCount = CountInputs(input);
 
@@ -47,30 +48,38 @@ namespace Games.System
             var diagonalSpeed = normalSpeed / 2;
             var speed = inputCount == 1 ? normalSpeed : diagonalSpeed;
 
+            var deltaX = 0;
+            var deltaY = 0;
+
             if (input.Up)
             {
-                position.Y += speed;
+                deltaY += speed;
             }
 
             if (input.Down)
             {
-                position.Y -= speed;
+                deltaY -= speed;
             }
 
             if (input.Left)
             {
-                position.X -= speed;
+                deltaX -= speed;
             }
 
             if (input.Right)
             {
-                position.X += speed;
+                deltaX += speed;
             }
 
+            var newbodyParts = MoveBodyParts(bodyParts, deltaX, deltaY);
+            position.X += deltaX;
+            position.Y += deltaY;
+
             world.ReplaceComponent(entity.Key, position);
+            world.ReplaceComponentsOfSameType<BodyPart>(entity.Key, newbodyParts);
         }
 
-        private int CountInputs(Component.Input input)
+        private int CountInputs(Input input)
         {
 
             var inputsEnabled = 0;
@@ -93,6 +102,62 @@ namespace Games.System
             }
 
             return inputsEnabled;
+        }
+
+        private (Input, Position, BodyPart[]) GetComponents(IComponent[] components)
+        {
+            Input input = new Input();
+            Position position = new Position();
+            var bodyParts = new List<BodyPart>();
+
+            foreach (var component in components)
+            {
+                if (component.GetType() == typeof(Input))
+                {
+                    input = (Input)component;
+                }
+                else if (component.GetType() == typeof(Position))
+                {
+                    position = (Position)component;
+                }
+                else if (component.GetType() == typeof(BodyPart))
+                {
+                    bodyParts.Add((BodyPart)component);
+                }
+            }
+
+            bodyParts.Sort((bodyPartA, bodyPartB) => bodyPartA.Index - bodyPartB.Index);
+
+            return (input, position, bodyParts.ToArray());
+        }
+
+        private IComponent[] MoveBodyParts(BodyPart[] bodyParts, int deltaX, int deltaY)
+        {
+            var parts = bodyParts;
+
+            for (int i = 0; i < bodyParts.Length; i++)
+            {
+                if (i == 0)
+                {
+                    parts[i].X += deltaX;
+                    parts[i].Y += deltaY;
+                }
+                else
+                {
+                    parts[i].X = bodyParts[i - 1].X;
+                    parts[i].Y = bodyParts[i - 1].Y;
+                }
+            }
+
+            // Recast as IComponent[]
+            IComponent[] components = new IComponent[parts.Length];
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                components[i] = parts[i];
+            }
+
+            return components;
         }
     }
 }
