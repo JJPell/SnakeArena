@@ -35,7 +35,8 @@ namespace Games.System
             {
                 var foodPosition = food.Value;
 
-                if (WithinColisionArea(playerPosition, foodPosition) {
+                if (WithinColisionArea(playerPosition, foodPosition))
+                {
                     world.RemoveEntity(food.Key);
                     GrowBody(entity, world);
                     break;
